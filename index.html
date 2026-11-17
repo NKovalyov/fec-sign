@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Подписание документов — ЭЦП CryptoPro</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- CryptoPro Browser Plugin API - загружается из расширения браузера или локально -->
+    <script>
+      // Пытаемся загрузить cadesplugin из различных источников
+      (function() {
+        // Проверяем, доступен ли плагин через расширение
+        if (window.cadesplugin) return;
+        
+        // Пытаемся загрузить через стандартный URL CryptoPro
+        var script = document.createElement('script');
+        script.src = 'https://www.cryptopro.ru/sites/default/files/products/cades/cadesplugin_api.js';
+        script.onerror = function() {
+          // Fallback: пробуем локальный URL (для расширения Chrome)
+          var fallback = document.createElement('script');
+          fallback.src = 'chrome-extension://iifchhfnnmpdbibifmljnfjporifaedf/cadesplugin_api.js';
+          fallback.onerror = function() {
+            console.warn('CryptoPro CAdESCOM Browser Plugin не найден');
+          };
+          document.head.appendChild(fallback);
+        };
+        document.head.appendChild(script);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
